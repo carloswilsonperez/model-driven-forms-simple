@@ -1,0 +1,48 @@
+<form #registerForm="ngForm" (ngSubmit)="register(user)">
+    <div class="signup-fields">
+        <div class="form-group" [class.has-error]="userName.invalid && userName.touched" [class.has-success]="userName.valid">
+            <input type="text" [(ngModel)]="user.userName" #userName="ngModel" name="userName" class="form-control" placeholder="User Name" required>
+            <span class="alert alert-danger help-block" *ngIf="!!userName.errors?.required && userName.touched">
+                  User Name is required
+            </span>
+        </div>
+        <div class="form-group" [class.has-error]="email.invalid && email.touched" [class.has-success]="email.valid">
+            <input type="text" [email]="user.email !== ''" [(ngModel)]="user.email" name="email" class="form-control" placeholder="Email" #email="ngModel" required>
+            <span class="alert alert-danger help-block" *ngIf="!!email.errors?.required && email.touched">
+                  Email is required
+            </span>
+            <span class="alert alert-danger help-block" *ngIf="!!email.errors?.email && email.touched">
+                  Email is invalid
+            </span>
+        </div>
+        <div class="form-group" [class.has-error]="password.invalid && password.touched" [class.has-success]="password.valid">
+            <input type="password" [(ngModel)]="user.password" class="form-control" name="password" placeholder="Password" #password="ngModel" required>
+            <span class="alert alert-danger help-block" *ngIf="password.invalid && password.touched">
+                  Password is required
+            </span>
+        </div>
+        <div class="form-group" [class.has-error]="confirmPasswordControl.invalid && confirmPasswordControl.touched" [class.has-success]="confirmPasswordControl.valid">
+            <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" [(ngModel)]="user.password" #confirmPasswordControl="ngModel" required>
+            <span class="alert alert-danger help-block" *ngIf="!!confirmPasswordControl.errors?.required && confirmPasswordControl.touched">
+                  Confirm password is required
+            </span>
+        </div>
+        <select class="form-control" id="country" [(ngModel)]="user.country" name="country">
+            <option *ngFor="let c of countries" [value]="c">{{c}}</option>
+        </select>
+
+        <div>
+            <button class="btn btn-primary btn-block" type="submit" [disabled]="registerForm.invalid" [class.disabled]="registerForm.invalid">Signup</button>
+        </div>
+    </div>
+</form>
+<div [hidden]="!submitted"> You submitted the following:
+    First Name: {{ user.firstName }}
+    <br>
+    Email: {{ user.email }}<br>
+    <br>
+    <button class="btn btn-default" (click)="submitted=false">Remove</button>
+</div>
+
+
+
